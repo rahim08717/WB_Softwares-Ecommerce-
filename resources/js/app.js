@@ -19,7 +19,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
-            // [NEW] Translation Mixin Added Here
+            
             .mixin({
                 methods: {
                     __(key) {

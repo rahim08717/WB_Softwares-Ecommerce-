@@ -2,7 +2,6 @@
 import ShopLayout from '@/Layouts/ShopLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
-// কন্ট্রোলার থেকে অর্ডার ডাটা রিসিভ করা (যদি সার্চ সফল হয়)
 defineProps({
     order: Object
 });
@@ -16,7 +15,7 @@ const submit = () => {
     form.post(route('track.search'), {
         preserveScroll: true,
         onSuccess: () => {
-            // সফল হলে কিছু করার দরকার নেই, ডাটা এমনিতেই দেখাবে
+
         }
     });
 };

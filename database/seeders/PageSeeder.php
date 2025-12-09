@@ -16,7 +16,7 @@ class PageSeeder extends Seeder
             'Privacy Policy',
             'Terms & Conditions',
             'Returns & Refunds',
-            'Contact Us' // কন্টাক্ট পেজের কন্টেন্ট এর জন্য
+            'Contact Us' 
         ];
 
         foreach ($pages as $title) {

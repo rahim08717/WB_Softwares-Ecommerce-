@@ -31,7 +31,6 @@ class HandleInertiaRequests extends Middleware
             $translations = json_decode(file_get_contents($langPath), true);
         }
 
-        // ইউজারের পারমিশন এবং রোল লোড করা
         $user = $request->user();
         $permissions = [];
         $roles = [];
@@ -49,7 +48,7 @@ class HandleInertiaRequests extends Middleware
 
             'auth' => [
                 'user' => $user,
-                'permissions' => $permissions, // [IMPORTANT] পারমিশন পাঠানো হলো
+                'permissions' => $permissions, 
                 'roles' => $roles,
             ],
 

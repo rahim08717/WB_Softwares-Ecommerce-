@@ -8,16 +8,12 @@ const props = defineProps({
     permissions: Array
 });
 
-// ফর্ম ইনিশিয়ালাইজ (আগের ডাটা দিয়ে)
 const form = useForm({
     name: props.role.name,
-    // রোলের বর্তমান পারমিশনগুলোর নাম ম্যাপ করে অ্যারেতে নিচ্ছি
     permissions: props.role.permissions.map(p => p.name)
 });
 
-// --- HELPER FUNCTIONS (Create Page এর মতোই) ---
 
-// ১. গ্রুপ করা
 const permissionsGrouped = computed(() => {
     const groups = {};
     props.permissions.forEach(perm => {
@@ -30,7 +26,6 @@ const permissionsGrouped = computed(() => {
     return groups;
 });
 
-// ২. সব সিলেক্ট
 const selectAll = (e) => {
     if (e.target.checked) {
         form.permissions = props.permissions.map(p => p.name);
@@ -39,7 +34,7 @@ const selectAll = (e) => {
     }
 };
 
-// ৩. গ্রুপ সিলেক্ট
+
 const selectGroup = (groupName, e) => {
     const groupPermissions = permissionsGrouped.value[groupName].map(p => p.name);
 
@@ -50,7 +45,6 @@ const selectGroup = (groupName, e) => {
     }
 };
 
-// চেকিং হেল্পার
 const isGroupSelected = (groupName) => {
     const groupPermissions = permissionsGrouped.value[groupName].map(p => p.name);
     return groupPermissions.every(p => form.permissions.includes(p));

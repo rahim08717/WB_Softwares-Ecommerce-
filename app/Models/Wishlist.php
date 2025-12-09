@@ -11,7 +11,6 @@ class Wishlist extends Model
 
     protected $fillable = ['user_id', 'product_id'];
 
-    // পণ্য চেনার জন্য রিলেশন
     public function product()
     {
         return $this->belongsTo(Product::class);

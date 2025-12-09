@@ -3,7 +3,6 @@ import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
-// Chart.js Components Import
 import { Bar, Doughnut } from 'vue-chartjs';
 import {
     Chart as ChartJS,
@@ -16,7 +15,6 @@ import {
     ArcElement
 } from 'chart.js';
 
-// Register Chart.js modules
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement);
 
 const props = defineProps({
@@ -38,7 +36,7 @@ const barChartData = computed(() => {
         datasets: [{
             label: 'Revenue ($)',
             data: totals.length ? totals : [0],
-            backgroundColor: '#10B981', // Green Theme
+            backgroundColor: '#10B981',
             borderRadius: 6,
             barThickness: 30
         }]
@@ -55,7 +53,6 @@ const barOptions = {
     }
 };
 
-// --- PIE CHART DATA (Status) ---
 const doughnutChartData = computed(() => {
     return {
         labels: ['Pending', 'Processing', 'Completed', 'Cancelled'],
@@ -66,7 +63,7 @@ const doughnutChartData = computed(() => {
                 props.orderStats?.completed || 0,
                 props.orderStats?.cancelled || 0
             ],
-            backgroundColor: ['#F59E0B', '#3B82F6', '#10B981', '#EF4444'], // Yellow, Blue, Green, Red
+            backgroundColor: ['#F59E0B', '#3B82F6', '#10B981', '#EF4444'],
             borderWidth: 0,
             hoverOffset: 10
         }]

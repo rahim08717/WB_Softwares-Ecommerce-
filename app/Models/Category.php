@@ -10,7 +10,6 @@ class Category extends Model
     use HasFactory;
     protected $fillable = ['name', 'slug', 'is_active'];
 
-    // রিলেশন: এক ক্যাটাগরির অনেক প্রোডাক্ট থাকে
     public function products()
     {
         return $this->hasMany(Product::class);

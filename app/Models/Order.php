@@ -17,13 +17,11 @@ class Order extends Model
         'address'
     ];
 
-    // ১. অর্ডারের মালিক (User) কে চেনার জন্য এই ফাংশনটি মিসিং ছিল
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // ২. অর্ডারের আইটেমগুলো পাওয়ার জন্য
     public function items()
     {
         return $this->hasMany(OrderItem::class);

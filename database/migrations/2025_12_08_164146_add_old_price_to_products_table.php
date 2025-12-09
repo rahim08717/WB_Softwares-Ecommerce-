@@ -12,7 +12,6 @@ return new class extends Migration
    public function up(): void
 {
     Schema::table('products', function (Blueprint $table) {
-        // price এর পরে old_price যোগ করছি (nullable, কারণ সব প্রোডাক্টে ডিসকাউন্ট থাকে না)
         $table->decimal('old_price', 10, 2)->nullable()->after('price');
     });
 }

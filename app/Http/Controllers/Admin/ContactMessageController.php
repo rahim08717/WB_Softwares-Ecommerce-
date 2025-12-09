@@ -6,11 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Mail; // ইমেইল পাঠানোর জন্য
+use Illuminate\Support\Facades\Mail; 
 
 class ContactMessageController extends Controller
 {
-    // সব মেসেজ দেখানো
     public function index()
     {
         return Inertia::render('Admin/Contacts/Index', [
@@ -18,7 +17,6 @@ class ContactMessageController extends Controller
         ]);
     }
 
-    // মেসেজ ডিটেইলস এবং রিপ্লাই ফর্ম
     public function show($id)
     {
         return Inertia::render('Admin/Contacts/Show', [
@@ -26,22 +24,18 @@ class ContactMessageController extends Controller
         ]);
     }
 
-    // রিপ্লাই পাঠানো (ইমেইল)
     public function reply(Request $request, $id)
     {
         $request->validate(['reply_message' => 'required']);
 
         $contact = Contact::findOrFail($id);
 
-        // ১. ইমেইল পাঠানো (আপাতত Raw মেইল, পরে Mailable ক্লাস ব্যবহার করা যাবে)
-        // নোট: এটা কাজ করার জন্য .env ফাইলে মেইল কনফিগারেশন থাকতে হবে
         try {
             Mail::raw($request->reply_message, function ($message) use ($contact) {
                 $message->to($contact->email)
                         ->subject('Reply to: ' . $contact->subject);
             });
 
-            // ২. স্ট্যাটাস আপডেট
             $contact->update(['is_replied' => true]);
 
             return redirect()->route('admin.contacts.index')->with('success', 'Reply sent successfully!');
@@ -50,7 +44,6 @@ class ContactMessageController extends Controller
         }
     }
 
-    // মেসেজ ডিলিট
     public function destroy($id)
     {
         Contact::findOrFail($id)->delete();

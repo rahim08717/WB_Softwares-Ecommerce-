@@ -12,8 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // শুধুমাত্র আমাদের তৈরি করা RolePermissionSeeder টি কল করা হলো
         $this->call(RolePermissionSeeder::class);
-        $this->call(SettingSeeder::class); // <--- এই লাইনটি যোগ করো
+        $this->call(SettingSeeder::class); 
     }
 }

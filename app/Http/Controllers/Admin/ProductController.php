@@ -4,17 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Models\Category; // ক্যাটাগরি মডেল লাগবে
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage; // ইমেজ ডিলিট বা হ্যান্ডেল করার জন্য
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        // প্রোডাক্টের সাথে ক্যাটাগরিও লোড করছি (with category)
         $products = Product::with('category')->latest()->get();
         return Inertia::render('Admin/Products/Index', [
             'products' => $products
@@ -23,7 +22,6 @@ class ProductController extends Controller
 
     public function create()
     {
-        // প্রোডাক্ট তৈরির সময় ক্যাটাগরি সিলেক্ট করতে হবে, তাই ক্যাটাগরি পাঠাচ্ছি
         $categories = Category::where('is_active', true)->get();
         return Inertia::render('Admin/Products/Create', [
             'categories' => $categories
@@ -38,14 +36,12 @@ class ProductController extends Controller
             'price' => 'required|numeric',
            'old_price' => 'nullable|numeric|gt:price',
             'stock' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // ইমেজ ভ্যালিডেশন
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'nullable|string',
         ]);
 
         $imagePath = null;
-        // ইমেজ আপলোড লজিক
         if ($request->hasFile('image')) {
-            // storage/app/public/products ফোল্ডারে সেভ হবে
             $imagePath = $request->file('image')->store('products', 'public');
         }
 
@@ -56,7 +52,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'old_price' => $request->old_price,
             'stock' => $request->stock,
-            'image' => $imagePath, // ইমেজের পাথ সেভ হচ্ছে
+            'image' => $imagePath,
             'description' => $request->description,
             'is_active' => true,
         ]);
@@ -64,7 +60,6 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
     }
 
-    // ৪. এডিট পেজ দেখানোর জন্য
     public function edit(Product $product)
     {
         return Inertia::render('Admin/Products/Edit', [
@@ -73,7 +68,6 @@ class ProductController extends Controller
         ]);
     }
 
-    // ৫. প্রোডাক্ট আপডেট করার জন্য (Image সহ)
     public function update(Request $request, Product $product)
     {
         $request->validate([
@@ -97,13 +91,11 @@ class ProductController extends Controller
             'is_active' => $request->is_active ?? true,
         ];
 
-        // যদি নতুন ছবি আপলোড করা হয়
+
         if ($request->hasFile('image')) {
-            // ১. আগের ছবি থাকলে সেটা ডিলিট করো
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);
             }
-            // ২. নতুন ছবি আপলোড করো
             $data['image'] = $request->file('image')->store('products', 'public');
         }
 
@@ -112,11 +104,9 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully!');
     }
 
-    // ৬. প্রোডাক্ট ডিলিট করার জন্য
     public function destroy(Product $product)
     {
-        // প্রোডাক্ট ডিলিট করার আগে ছবি ডিলিট করতে হবে
-        if ($product->image) {
+             if ($product->image) {
             Storage::disk('public')->delete($product->image);
         }
 

@@ -17,21 +17,18 @@ class Product extends Model
         'old_price',
         'image',
         'stock',
-        'is_active' // old_price যোগ করা হলো
+        'is_active'
     ];
-    // রিলেশন: প্রোডাক্ট একটি ক্যাটাগরির আন্ডারে থাকে
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    // Review রিলেশন
     public function reviews()
     {
         return $this->hasMany(Review::class)->where('is_active', true);
     }
 
-    // গড় রেটিং বের করার জন্য (Optional helper)
     public function getAverageRatingAttribute()
     {
         return $this->reviews()->avg('rating') ?? 0;

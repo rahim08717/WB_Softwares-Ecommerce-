@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('key')->unique(); // যেমন: site_name, phone, logo
-            $table->text('value')->nullable(); // যেমন: WB Shop, 017..., image_path
+            $table->string('key')->unique();
+            $table->text('value')->nullable(); 
             $table->timestamps();
         });
     }

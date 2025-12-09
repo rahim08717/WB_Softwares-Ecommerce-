@@ -9,11 +9,11 @@ use Inertia\Inertia;
 
 class WishlistController extends Controller
 {
-    // ১. উইশলিস্ট পেজ দেখানো
+
     public function index()
     {
         $wishlistItems = Wishlist::where('user_id', Auth::id())
-            ->with('product') // প্রোডাক্টের তথ্যসহ
+            ->with('product')
             ->latest()
             ->get();
 
@@ -22,7 +22,7 @@ class WishlistController extends Controller
         ]);
     }
 
-    // ২. অ্যাড বা রিমুভ করা (Toggle)
+
     public function toggle(Request $request)
     {
         $request->validate(['product_id' => 'required|exists:products,id']);
@@ -30,19 +30,19 @@ class WishlistController extends Controller
         $user = Auth::user();
         $productId = $request->product_id;
 
-        // চেক করছি আগে থেকেই আছে কিনা
+
         $exists = Wishlist::where('user_id', $user->id)
             ->where('product_id', $productId)
             ->first();
 
         if ($exists) {
-            $exists->delete(); // থাকলে ডিলিট
+            $exists->delete();
             return back()->with('success', 'Removed from wishlist.');
         } else {
             Wishlist::create([
                 'user_id' => $user->id,
                 'product_id' => $productId
-            ]); // না থাকলে অ্যাড
+            ]); 
             return back()->with('success', 'Added to wishlist.');
         }
     }

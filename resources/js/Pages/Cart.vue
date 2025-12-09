@@ -7,18 +7,15 @@ defineProps({
   total: Number,
 });
 
-// প্রোডাক্ট রিমুভ করার ফাংশন
 const removeItem = (id) => {
   if (confirm("Are you sure you want to remove this item?")) {
     router.delete(route("cart.remove", id));
   }
 };
 
-// কোয়ান্টিটি আপডেট করার ফাংশন
 const updateQuantity = (id, currentQty, change) => {
   const newQty = currentQty + change;
 
-  // ১ এর নিচে নামতে পারবে না (রিমুভ করতে চাইলে রিমুভ বাটন চাপতে হবে)
   if (newQty < 1) return;
 
   router.patch(
@@ -27,7 +24,7 @@ const updateQuantity = (id, currentQty, change) => {
       quantity: newQty,
     },
     {
-      preserveScroll: true, // পেজ যাতে স্ক্রল করে ওপরে না উঠে যায়
+      preserveScroll: true, 
     }
   );
 };

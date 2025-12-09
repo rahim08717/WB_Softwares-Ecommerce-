@@ -3,7 +3,7 @@ import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
 
 defineProps({
-  orders: Object, // Pagination Object
+  orders: Object, 
 });
 </script>
 

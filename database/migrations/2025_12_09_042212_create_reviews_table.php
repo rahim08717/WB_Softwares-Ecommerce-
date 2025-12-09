@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->integer('rating'); // 1 to 5
             $table->text('comment')->nullable();
-            $table->boolean('is_active')->default(true); // অ্যাডমিন চাইলে হাইড করতে পারবে
+            $table->boolean('is_active')->default(true); 
             $table->timestamps();
         });
     }

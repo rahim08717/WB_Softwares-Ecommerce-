@@ -7,8 +7,8 @@ export default {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
-        './resources/js/**/*.vue', // <--- এই লাইনটি সবচেয়ে জরুরি, এটা না থাকলে Vue তে ডিজাইন পাবে না
-        './resources/js/**/*.js',  // <--- এটাও থাকতে হবে
+        './resources/js/**/*.vue',
+        './resources/js/**/*.js',  
     ],
 
     theme: {

@@ -28,7 +28,6 @@ onUnmounted(() => {
   if (autoSlideInterval.value) clearInterval(autoSlideInterval.value);
 });
 
-// --- PRODUCT LOGIC (View More) ---
 const visibleProductCount = ref(12);
 
 const displayedProducts = computed(() => {
@@ -39,7 +38,6 @@ const loadMoreProducts = () => {
   visibleProductCount.value += 12;
 };
 
-// --- ADD TO CART (No Reload) ---
 const addToCart = (product) => {
   router.post(route('cart.add'), {
     product_id: product.id,
@@ -47,12 +45,11 @@ const addToCart = (product) => {
   }, {
     preserveScroll: true,
     onSuccess: () => {
-        // Toast message logic can go here
+
     }
   });
 };
 
-// --- WISHLIST TOGGLE ---
 const toggleWishlist = (product) => {
   router.post(route('wishlist.toggle'), {
     product_id: product.id
@@ -61,7 +58,6 @@ const toggleWishlist = (product) => {
   });
 };
 
-// --- CONTACT FORM LOGIC ---
 const contactForm = useForm({
     name: '',
     email: '',

@@ -5,7 +5,7 @@ import { ref, computed } from 'vue';
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
 import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
 
-// --- CHART JS IMPORTS ---
+
 import { Line } from 'vue-chartjs';
 import {
     Chart as ChartJS,
@@ -19,7 +19,6 @@ import {
     Filler
 } from 'chart.js';
 
-// Chart রেজিস্টার করা হচ্ছে
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -52,22 +51,18 @@ const pendingOrders = computed(() => {
     return props.orders.filter(order => order.status === 'pending').length;
 });
 
-// --- CHART DATA CONFIG ---
 const chartData = computed(() => {
-    // ডামি ডাটা (তুমি চাইলে এখানে রিয়েল অর্ডার ডেট প্রসেস করতে পারো)
-    // উদাহরণ: শেষ ৬ মাসের খরচ
+
     return {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
         datasets: [{
             label: 'Spending ($)',
-            backgroundColor: 'rgba(16, 185, 129, 0.2)', // Green with opacity
-            borderColor: '#10B981', // Green solid
-            borderWidth: 2,
+            backgroundColor: 'rgba(16, 185, 129, 0.2)',
             pointBackgroundColor: '#10B981',
             pointBorderColor: '#fff',
-            fill: true, // গ্রাফের নিচে রঙ ভরাট করবে
-            data: [0, 50, 150, 80, 200, 120, parseFloat(totalSpent.value) || 0], // ডামি ডাটা + রিয়েল টোটাল
-            tension: 0.4 // লাইন স্মুথ করার জন্য
+            fill: true,
+            data: [0, 50, 150, 80, 200, 120, parseFloat(totalSpent.value) || 0],
+            tension: 0.4
         }]
     };
 });

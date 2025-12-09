@@ -12,10 +12,8 @@ class RolePermissionSeeder extends Seeder
 {
     public function run(): void
     {
-        // ১. ক্যাশ ক্লিয়ার
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // ২. পারমিশন লিস্ট (Group.Action ফরম্যাটে)
         $permissions = [
             // Dashboard
             'dashboard.view',
@@ -48,21 +46,16 @@ class RolePermissionSeeder extends Seeder
             'setting.view', 'setting.edit',
         ];
 
-        // পারমিশন তৈরি
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
         }
 
-        // ৩. রোল তৈরি
         $superAdminRole = Role::firstOrCreate(['name' => 'super-admin']);
         $managerRole = Role::firstOrCreate(['name' => 'manager']);
         $userRole = Role::firstOrCreate(['name' => 'user']);
 
-        // ৪. পারমিশন অ্যাসাইন করা
-        // সুপার অ্যাডমিন সব পাবে
         $superAdminRole->givePermissionTo(Permission::all());
 
-        // ম্যানেজার কিছু স্পেসিফিক পাবে
         $managerRole->givePermissionTo([
             'dashboard.view',
             'product.view', 'product.create', 'product.edit',
@@ -71,7 +64,6 @@ class RolePermissionSeeder extends Seeder
             'slider.view', 'contact.view'
         ]);
 
-        // ৫. ইউজার তৈরি
         // Super Admin
         $adminUser = User::firstOrCreate(
             ['email' => 'mywbsoft@gmail.com'],

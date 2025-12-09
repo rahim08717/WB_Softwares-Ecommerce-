@@ -14,8 +14,8 @@ return new class extends Migration
     Schema::create('pages', function (Blueprint $table) {
         $table->id();
         $table->string('title');
-        $table->string('slug')->unique(); // যেমন: about-us, privacy-policy
-        $table->longText('content'); // পেজের বিস্তারিত লেখা
+        $table->string('slug')->unique(); 
+        $table->longText('content');
         $table->boolean('is_active')->default(true);
         $table->timestamps();
     });

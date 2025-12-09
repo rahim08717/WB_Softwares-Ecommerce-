@@ -18,8 +18,8 @@ return new class extends Migration
         $table->foreignId('category_id')->constrained()->onDelete('cascade');
         $table->text('description')->nullable();
         $table->decimal('price', 10, 2);
-        $table->string('image')->nullable(); // Product Image
-        $table->integer('stock')->default(0); // Inventory management
+        $table->string('image')->nullable();
+        $table->integer('stock')->default(0); 
         $table->boolean('is_active')->default(true);
         $table->timestamps();
     });

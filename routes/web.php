@@ -28,9 +28,8 @@ use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\RoleController;
 
-// ---------------------------------------------------------
-// 🔹 PUBLIC ROUTES
-// ---------------------------------------------------------
+// PUBLIC ROUTES
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/product/{slug}', [HomeController::class, 'show'])->name('product.show');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
@@ -41,9 +40,9 @@ Route::get('/track-order', [TrackOrderController::class, 'index'])->name('track.
 Route::post('/track-order', [TrackOrderController::class, 'search'])->name('track.search');
 Route::get('/lang/{lang}', [HomeController::class, 'switchLanguage'])->name('lang.switch');
 
-// ---------------------------------------------------------
-// 🔹 CART ROUTES
-// ---------------------------------------------------------
+
+// CART ROUTES
+
 Route::prefix('cart')->name('cart.')->group(function () {
     Route::get('/',        [CartController::class, 'index'])->name('index');
     Route::post('/add',    [CartController::class, 'store'])->name('add');
@@ -51,9 +50,7 @@ Route::prefix('cart')->name('cart.')->group(function () {
     Route::patch('/update/{id}',  [CartController::class, 'update'])->name('update');
 });
 
-// ---------------------------------------------------------
-// 🔹 USER ROUTES (Auth Required)
-// ---------------------------------------------------------
+//  USER ROUTES (Auth Required)
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/orders/{id}/cancel', [DashboardController::class, 'cancelOrder'])->name('orders.cancel');
@@ -74,10 +71,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 });
 
-// ---------------------------------------------------------
-// 🔹 ADMIN ROUTES (Role & Permission Protected)
-// ---------------------------------------------------------
-Route::middleware(['auth', 'role:super-admin|manager|admin']) // এখানে একাধিক রোল এলাউ করা হয়েছে
+
+//  ADMIN ROUTES (Role & Permission Protected)
+Route::middleware(['auth', 'role:super-admin|manager|admin']) 
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {

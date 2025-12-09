@@ -17,7 +17,7 @@ return new class extends Migration
         $table->string('email');
         $table->string('subject')->nullable();
         $table->text('message');
-        $table->boolean('is_replied')->default(false); // রিপ্লাই দেওয়া হয়েছে কিনা
+        $table->boolean('is_replied')->default(false); 
         $table->timestamps();
     });
 }

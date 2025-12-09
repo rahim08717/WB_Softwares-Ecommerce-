@@ -17,7 +17,7 @@ return new class extends Migration
         $table->foreignId('product_id')->constrained()->onDelete('cascade');
         $table->timestamps();
 
-        // একজন ইউজার একই পণ্য দুইবার উইশলিস্টে রাখতে পারবে না
+        
         $table->unique(['user_id', 'product_id']);
     });
 }

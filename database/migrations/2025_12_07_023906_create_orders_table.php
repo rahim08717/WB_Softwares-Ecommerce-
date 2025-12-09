@@ -15,9 +15,9 @@ return new class extends Migration
         $table->id();
         $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Who ordered
         $table->decimal('total_price', 10, 2);
-        $table->string('status')->default('pending'); // pending, processing, completed, cancelled
+        $table->string('status')->default('pending');
         $table->string('payment_status')->default('unpaid');
-        $table->text('address')->nullable(); // Shipping address
+        $table->text('address')->nullable();
         $table->timestamps();
     });
 }

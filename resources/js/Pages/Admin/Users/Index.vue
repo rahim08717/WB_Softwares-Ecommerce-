@@ -4,11 +4,10 @@ import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const props = defineProps({
-    users: Object, // Pagination Object
-    roles: Array   // Available Roles ['admin', 'user']
+    users: Object,
+    roles: Array
 });
 
-// রোল চেঞ্জ করার ফাংশন
 const changeRole = (userId, newRole) => {
     if(confirm(`Are you sure you want to change this user's role to ${newRole}?`)) {
         router.patch(route('admin.users.update-role', userId), {
@@ -18,12 +17,10 @@ const changeRole = (userId, newRole) => {
             onSuccess: () => alert('Role updated!')
         });
     } else {
-        // যদি ক্যান্সেল করে, পেজ রিলোড দিয়ে আগের অবস্থায় আনো (UI ফিক্সের জন্য)
         router.reload();
     }
 };
 
-// ইউজার ডিলিট ফাংশন
 const deleteUser = (userId) => {
     if(confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
         router.delete(route('admin.users.destroy', userId));

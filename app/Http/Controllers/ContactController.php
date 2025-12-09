@@ -8,13 +8,12 @@ use Inertia\Inertia;
 
 class ContactController extends Controller
 {
-    // কন্টাক্ট পেজ দেখানো
     public function index()
     {
         return Inertia::render('Contact');
     }
 
-    // মেসেজ জমা নেওয়া
+
     public function store(Request $request)
     {
         $request->validate([

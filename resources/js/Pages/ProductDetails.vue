@@ -12,13 +12,11 @@ const page = usePage();
 const user = computed(() => page.props.auth.user);
 
 const quantity = ref(1);
-const activeTab = ref('description'); // Tabs: description, reviews
+const activeTab = ref('description');
 
-// Quantity Logic
 const increment = () => { if (quantity.value < props.product.stock) quantity.value++; };
 const decrement = () => { if (quantity.value > 1) quantity.value--; };
 
-// ১. Add to Cart (পেজ চেঞ্জ হবে না)
 const addToCart = () => {
     const form = useForm({
         product_id: props.product.id,
@@ -30,7 +28,6 @@ const addToCart = () => {
     });
 };
 
-// ২. Buy Now (সরাসরি চেকআউট পেজে যাবে)
 const buyNow = () => {
     const form = useForm({
         product_id: props.product.id,
@@ -39,13 +36,11 @@ const buyNow = () => {
 
     form.post(route('cart.add'), {
         onSuccess: () => {
-            // কার্টে যোগ হওয়ার পর চেকআউটে রিডাইরেক্ট
             router.visit(route('checkout.index'));
         }
     });
 };
 
-// Review Submission
 const reviewForm = useForm({
     product_id: props.product.id,
     rating: 5,
@@ -62,7 +57,6 @@ const submitReview = () => {
     });
 };
 
-// গড় রেটিং ক্যালকুলেশন (Frontend এ যদি সরাসরি দেখাতে চাও)
 const averageRating = computed(() => {
     if (props.product.reviews.length === 0) return 0;
     const total = props.product.reviews.reduce((acc, review) => acc + review.rating, 0);

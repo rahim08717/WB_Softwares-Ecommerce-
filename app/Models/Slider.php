@@ -10,16 +10,15 @@ class Slider extends Model
     use HasFactory;
 
     protected $fillable = [
-        'product_id', // নতুন ফিল্ড
+        'product_id',
         'title',
         'subtitle',
-        'image', // এটা এখন অপশনাল, যদি কেউ কাস্টম ইমেজ দিতে চায়
+        'image',
         'link',
         'order',
         'is_active'
     ];
 
-    // প্রোডাক্টের সাথে সম্পর্ক
     public function product()
     {
         return $this->belongsTo(Product::class);

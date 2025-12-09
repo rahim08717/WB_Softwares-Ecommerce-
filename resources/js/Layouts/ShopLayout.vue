@@ -7,19 +7,15 @@ const user = computed(() => page.props.auth.user);
 const cartCount = computed(() => page.props.cartCount || 0);
 const wishlistCount = computed(() => page.props.wishlistCount || 0);
 
-// Global Data
 const allCategories = computed(() => page.props.categories || []);
 const settings = computed(() => page.props.settings || {});
 
-// Categories Logic (Show exactly 6 categories)
 const visibleCategories = computed(() => allCategories.value.slice(0, 6));
 
-// UI Controls
 const showUserDropdown = ref(false);
 const showLangDropdown = ref(false);
 const showMobileMenu = ref(false);
 
-// Dark Mode
 const isDarkMode = ref(false);
 const toggleTheme = () => {
     isDarkMode.value = !isDarkMode.value;
@@ -30,14 +26,12 @@ const toggleTheme = () => {
     }
 };
 
-// Language Logic
 const currentLang = computed(() => page.props.locale ? page.props.locale.toUpperCase() : 'EN');
 
 const changeLang = (lang) => {
     window.location.href = route('lang.switch', lang);
 };
 
-// Search Form
 const searchForm = useForm({ query: '' });
 const submitSearch = () => {
     if (searchForm.query.trim()) {
@@ -45,9 +39,7 @@ const submitSearch = () => {
     }
 };
 
-// Category Click Function (Search by Category Name)
 const visitCategory = (categoryName) => {
-    // ক্যাটাগরি নামে ক্লিক করলে সেই নাম দিয়ে সার্চ হবে
     router.get(route('search'), { query: categoryName });
 };
 

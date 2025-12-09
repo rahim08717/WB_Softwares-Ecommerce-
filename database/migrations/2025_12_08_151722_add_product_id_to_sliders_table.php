@@ -12,9 +12,8 @@ return new class extends Migration
    public function up(): void
 {
     Schema::table('sliders', function (Blueprint $table) {
-        // প্রোডাক্ট আইডি যোগ করছি, ইমেজ এখন নাল হতে পারে
         $table->foreignId('product_id')->nullable()->after('id')->constrained()->onDelete('cascade');
-        $table->string('image')->nullable()->change(); // ইমেজ এখন অপশনাল
+        $table->string('image')->nullable()->change(); 
     });
 }
 

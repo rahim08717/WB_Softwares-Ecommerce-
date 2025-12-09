@@ -10,9 +10,7 @@ const form = useForm({
     permissions: []
 });
 
-// --- HELPER FUNCTIONS ---
 
-// ১. পারমিশনগুলোকে গ্রুপ অনুযায়ী আলাদা করা (যেমন: admin, product, order)
 const permissionsGrouped = computed(() => {
     const groups = {};
     props.permissions.forEach(perm => {
@@ -25,7 +23,6 @@ const permissionsGrouped = computed(() => {
     return groups;
 });
 
-// ২. সব পারমিশন সিলেক্ট করা (Select All)
 const selectAll = (e) => {
     if (e.target.checked) {
         form.permissions = props.permissions.map(p => p.name);
@@ -34,20 +31,17 @@ const selectAll = (e) => {
     }
 };
 
-// ৩. নির্দিষ্ট গ্রুপের সব সিলেক্ট করা
 const selectGroup = (groupName, e) => {
     const groupPermissions = permissionsGrouped.value[groupName].map(p => p.name);
 
     if (e.target.checked) {
-        // আগে যা আছে তার সাথে নতুন গ্রুপের গুলো যোগ করো (Duplicate ছাড়া)
         form.permissions = [...new Set([...form.permissions, ...groupPermissions])];
     } else {
-        // এই গ্রুপের গুলো রিমুভ করো
         form.permissions = form.permissions.filter(p => !groupPermissions.includes(p));
     }
 };
 
-// চেকিং হেল্পার
+
 const isGroupSelected = (groupName) => {
     const groupPermissions = permissionsGrouped.value[groupName].map(p => p.name);
     return groupPermissions.every(p => form.permissions.includes(p));

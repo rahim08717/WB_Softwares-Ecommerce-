@@ -6,7 +6,6 @@ defineProps({
     wishlistItems: Array
 });
 
-// রিমুভ করার জন্য আমরা আবার টগল ফাংশন কল করব
 const removeFromWishlist = (productId) => {
     if(confirm('Remove from wishlist?')) {
         router.post(route('wishlist.toggle'), { product_id: productId });

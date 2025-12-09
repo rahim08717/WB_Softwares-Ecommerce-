@@ -7,8 +7,7 @@ const props = defineProps({
 });
 
 const form = useForm({
-    _method: 'put', // আপডেটের জন্য PUT মেথড
-    title: props.slider.title,
+    _method: 'put', 
     subtitle: props.slider.subtitle,
     image: null,
     link: props.slider.link,
@@ -17,7 +16,6 @@ const form = useForm({
 });
 
 const submit = () => {
-    // ইমেজ আপলোডসহ আপডেট করার জন্য post ব্যবহার করা হয়, সাথে _method: put
     form.post(route('admin.sliders.update', props.slider.id));
 };
 </script>

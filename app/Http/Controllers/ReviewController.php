@@ -16,7 +16,7 @@ class ReviewController extends Controller
             'comment' => 'nullable|string|max:500',
         ]);
 
-        // একজন ইউজার এক প্রোডাক্টে একবারই রিভিউ দিতে পারবে
+       
         $exists = Review::where('user_id', Auth::id())
             ->where('product_id', $request->product_id)
             ->exists();

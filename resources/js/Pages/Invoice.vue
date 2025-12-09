@@ -83,7 +83,6 @@ const printInvoice = () => {
 </template>
 
 <style>
-/* প্রিন্ট করার সময় বাটন লুকানোর জন্য */
 @media print {
     .no-print {
         display: none;

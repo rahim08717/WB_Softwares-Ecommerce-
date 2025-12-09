@@ -3,10 +3,9 @@ import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { Head, useForm, router } from '@inertiajs/vue3';
 
 const props = defineProps({
-    settings: Object // Controller থেকে আসা settings অবজেক্ট
+    settings: Object 
 });
 
-// ফর্ম ইনিশিয়ালাইজ করা (আগের ডাটা দিয়ে)
 const form = useForm({
     site_name: props.settings.site_name || '',
     site_email: props.settings.site_email || '',
@@ -15,12 +14,10 @@ const form = useForm({
     scrolling_text: props.settings.scrolling_text || '',
     facebook: props.settings.facebook || '',
     youtube: props.settings.youtube || '',
-    logo: null, // ফাইল আপলোডের জন্য
+    logo: null,
 });
 
 const submit = () => {
-    // ফাইল আপলোড আছে তাই post মেথড ব্যবহার করছি
-    // forceFormData: true দিলে Inertia অটোমেটিক ফর্ম ডাটা হ্যান্ডেল করে
     router.post(route('admin.settings.update'), {
         _method: 'post',
         ...form,

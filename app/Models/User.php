@@ -6,13 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles; // [New] এই লাইনটি যোগ করো
+use Spatie\Permission\Traits\HasRoles; 
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles; // [New] এখানে HasRoles যোগ করো
-
+    use HasFactory, Notifiable, HasRoles;
     protected $fillable = [
         'name',
         'email',

@@ -9,11 +9,11 @@ const props = defineProps({
 const user = usePage().props.auth.user;
 
 const form = useForm({
-    name: user.name, // অটোমেটিক নাম বসে যাবে
+    name: user.name,
     email: user.email,
     phone: '',
     address: '',
-    payment_method: 'cod', // ডিফল্ট Cash on Delivery
+    payment_method: 'cod', 
 });
 
 const submitOrder = () => {
