@@ -1,7 +1,8 @@
 # 1. Use PHP 8.2 with Apache
 FROM php:8.2-apache
 
-# 2. Install dependencies (Zip, Git, etc.)
+# 2. Install dependencies (Zip, Git, Postgres Libs)
+# [UPDATED] libpq-dev যুক্ত করা হয়েছে PostgreSQL এর জন্য
 RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
@@ -10,14 +11,16 @@ RUN apt-get update && apt-get install -y \
     curl \
     libpng-dev \
     libonig-dev \
-    libxml2-dev
+    libxml2-dev \
+    libpq-dev
 
 # 3. Install Node.js (For Vue/Tailwind build)
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt-get install -y nodejs
 
 # 4. Install PHP Extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+# [UPDATED] pdo_mysql এর বদলে pdo_pgsql দেওয়া হয়েছে
+RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd zip
 
 # 5. Configure Apache Document Root to /public
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
