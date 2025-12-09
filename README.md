@@ -88,7 +88,7 @@ Follow these steps to run the project locally:
         ```
     -   Open `.env` and set your Database credentials:
         ```
-        DB_DATABASE=wb_shop
+        DB_DATABASE=rabbil
         DB_USERNAME=root
         DB_PASSWORD=
         ```
