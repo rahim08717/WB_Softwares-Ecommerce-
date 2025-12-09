@@ -86,7 +86,7 @@ Follow these steps to run the project locally:
 -   **Password:** `password` (for both)
 
 ## 📸 Screenshots
-*(You can add screenshots here later)*
+*(I can add screenshots here later)*
 
 ---
-Developed by **WB Softwares Intern**.
+Developed by **Md. Abdur Rahim**.
