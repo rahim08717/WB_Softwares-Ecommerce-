@@ -6,7 +6,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'WB Shop';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -19,6 +19,15 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            // [NEW] Translation Mixin Added Here
+            .mixin({
+                methods: {
+                    __(key) {
+                        const translations = this.$page.props.translations;
+                        return translations && translations[key] ? translations[key] : key;
+                    }
+                }
+            })
             .mount(el);
     },
     progress: {

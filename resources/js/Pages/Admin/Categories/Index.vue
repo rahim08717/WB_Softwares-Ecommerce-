@@ -1,8 +1,7 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
-import { router } from "@inertiajs/vue3"; // router ইম্পোর্ট করো
-
+import { router } from "@inertiajs/vue3";
 defineProps({
   categories: Array,
 });

@@ -4,52 +4,63 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
-use App\Models\Category;
 use App\Models\Setting;
+use App\Models\Category;
+use App\Models\Wishlist;
 
 class HandleInertiaRequests extends Middleware
 {
-    /**
-     * The root template that is loaded on the first page visit.
-     *
-     * @var string
-     */
     protected $rootView = 'app';
 
-    /**
-     * Determine the current asset version.
-     */
     public function version(Request $request): ?string
     {
         return parent::version($request);
     }
 
-    /**
-     * Define the props that are shared by default.
-     *
-     * @return array<string, mixed>
-     */
     public function share(Request $request): array
     {
-        // কার্টে মোট কত পিস প্রোডাক্ট আছে তা হিসাব করা
-        $cart = session()->get('cart', []);
-        $totalQuantity = array_sum($cart);
+        if (session()->has('locale')) {
+            app()->setLocale(session()->get('locale'));
+        }
+
+        $locale = app()->getLocale();
+        $translations = [];
+        $langPath = base_path("lang/{$locale}.json");
+
+        if (file_exists($langPath)) {
+            $translations = json_decode(file_get_contents($langPath), true);
+        }
+
+        // ইউজারের পারমিশন এবং রোল লোড করা
+        $user = $request->user();
+        $permissions = [];
+        $roles = [];
+
+        if ($user) {
+            $permissions = $user->getAllPermissions()->pluck('name');
+            $roles = $user->getRoleNames();
+        }
 
         return [
             ...parent::share($request),
+
+            'locale' => $locale,
+            'translations' => $translations,
+
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
+                'permissions' => $permissions, // [IMPORTANT] পারমিশন পাঠানো হলো
+                'roles' => $roles,
             ],
-            // এই লাইনটি নতুন যোগ করো
-            'cartCount' => $totalQuantity,
+
+            'cartCount' => array_sum(session()->get('cart', [])),
+            'wishlistCount' => $user ? Wishlist::where('user_id', $user->id)->count() : 0,
             'categories' => Category::where('is_active', true)->get(),
-            // [NEW] Settings ডাটা Key-Value আকারে পাঠানো হচ্ছে
             'settings' => Setting::all()->pluck('value', 'key'),
 
-            // ফ্ল্যাশ মেসেজ (সাকসেস মেসেজ দেখানোর জন্য)
             'flash' => [
-                'success' => fn() => $request->session()->get('success'),
-                'error' => fn() => $request->session()->get('error'),
+                'success' => fn () => $request->session()->get('success'),
+                'error' => fn () => $request->session()->get('error'),
             ],
         ];
     }

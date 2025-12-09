@@ -2,19 +2,19 @@
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
-// প্রপস রিসিভ করা (যে ডাটা কন্ট্রোলার থেকে আসছে)
+
 const props = defineProps({
     category: Object
 });
 
-// ফর্ম ইনিশিয়ালাইজ করা (আগের ভ্যালু দিয়ে)
+
 const form = useForm({
     name: props.category.name,
     is_active: Boolean(props.category.is_active),
 });
 
 const submit = () => {
-    // PUT মেথড ব্যবহার করে আপডেট রিকোয়েস্ট পাঠানো
+ 
     form.put(route('admin.categories.update', props.category.id));
 };
 </script>

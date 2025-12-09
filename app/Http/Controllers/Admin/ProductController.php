@@ -36,6 +36,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric',
+           'old_price' => 'nullable|numeric|gt:price',
             'stock' => 'required|integer',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // ইমেজ ভ্যালিডেশন
             'description' => 'nullable|string',
@@ -53,6 +54,7 @@ class ProductController extends Controller
             'slug' => Str::slug($request->name),
             'category_id' => $request->category_id,
             'price' => $request->price,
+            'old_price' => $request->old_price,
             'stock' => $request->stock,
             'image' => $imagePath, // ইমেজের পাথ সেভ হচ্ছে
             'description' => $request->description,
@@ -78,6 +80,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric',
+            'old_price' => 'nullable|numeric|gt:price',
             'stock' => 'required|integer',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'nullable|string',
@@ -88,6 +91,7 @@ class ProductController extends Controller
             'slug' => Str::slug($request->name),
             'category_id' => $request->category_id,
             'price' => $request->price,
+            'old_price' => $request->old_price,
             'stock' => $request->stock,
             'description' => $request->description,
             'is_active' => $request->is_active ?? true,

@@ -10,44 +10,88 @@ use Illuminate\Support\Facades\Hash;
 
 class RolePermissionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // ১. আগের ক্যাশ ক্লিয়ার করা (Spatie এর জন্য জরুরি)
+        // ১. ক্যাশ ক্লিয়ার
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // ২. রোল তৈরি করা
-        $adminRole = Role::create(['name' => 'admin']);
-        $userRole = Role::create(['name' => 'user']);
+        // ২. পারমিশন লিস্ট (Group.Action ফরম্যাটে)
+        $permissions = [
+            // Dashboard
+            'dashboard.view',
 
-        // ৩. পারমিশন তৈরি করা (কিছু স্যাম্পল পারমিশন)
-        Permission::create(['name' => 'manage products']);
-        Permission::create(['name' => 'manage orders']);
-        Permission::create(['name' => 'manage users']);
+            // User Management
+            'user.view', 'user.create', 'user.edit', 'user.delete', 'user.role',
 
-        // ৪. অ্যাডমিনকে সব পারমিশন দেওয়া
-        $adminRole->givePermissionTo(Permission::all());
+            // Role Management
+            'role.view', 'role.create', 'role.edit', 'role.delete',
 
-        // ৫. স্পেশাল অ্যাডমিন ইউজার তৈরি (অ্যাসাইনমেন্ট অনুযায়ী)
-        $adminUser = User::create([
-            'name' => 'Super Admin',
-            'email' => 'mywbsoft@gmail.com', // এই ইমেইলটি অ্যাসাইনমেন্টে দেওয়া ছিল
-            'password' => Hash::make('password'), // লগিন পাসওয়ার্ড: password
+            // Category Management
+            'category.view', 'category.create', 'category.edit', 'category.delete',
+
+            // Product Management
+            'product.view', 'product.create', 'product.edit', 'product.delete',
+
+            // Order Management
+            'order.view', 'order.edit', 'order.delete', 'order.invoice',
+
+            // Slider Management
+            'slider.view', 'slider.create', 'slider.edit', 'slider.delete',
+
+            // Page Management
+            'page.view', 'page.create', 'page.edit', 'page.delete',
+
+            // Contact Messages
+            'contact.view', 'contact.reply', 'contact.delete',
+
+            // Settings
+            'setting.view', 'setting.edit',
+        ];
+
+        // পারমিশন তৈরি
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
+
+        // ৩. রোল তৈরি
+        $superAdminRole = Role::firstOrCreate(['name' => 'super-admin']);
+        $managerRole = Role::firstOrCreate(['name' => 'manager']);
+        $userRole = Role::firstOrCreate(['name' => 'user']);
+
+        // ৪. পারমিশন অ্যাসাইন করা
+        // সুপার অ্যাডমিন সব পাবে
+        $superAdminRole->givePermissionTo(Permission::all());
+
+        // ম্যানেজার কিছু স্পেসিফিক পাবে
+        $managerRole->givePermissionTo([
+            'dashboard.view',
+            'product.view', 'product.create', 'product.edit',
+            'order.view', 'order.edit',
+            'category.view', 'category.create',
+            'slider.view', 'contact.view'
         ]);
 
-        // অ্যাডমিন রোল অ্যাসাইন করা
-        $adminUser->assignRole($adminRole);
+        // ৫. ইউজার তৈরি
+        // Super Admin
+        $adminUser = User::firstOrCreate(
+            ['email' => 'mywbsoft@gmail.com'],
+            [
+                'name' => 'Super Admin',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+            ]
+        );
+        $adminUser->syncRoles([$superAdminRole]);
 
-        // ৬. টেস্টিংয়ের জন্য একজন সাধারণ ইউজার তৈরি
-        $normalUser = User::create([
-            'name' => 'Normal User',
-            'email' => 'user@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
-
-        // ইউজার রোল অ্যাসাইন করা
-        $normalUser->assignRole($userRole);
+        // Normal User
+        $normalUser = User::firstOrCreate(
+            ['email' => 'user@gmail.com'],
+            [
+                'name' => 'Normal User',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+            ]
+        );
+        $normalUser->syncRoles([$userRole]);
     }
 }
